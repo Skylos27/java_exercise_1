@@ -8,8 +8,25 @@ public class Launcher {
         String command = scanner.next();
         while (!command.equals("quit"))
         {
-            System.out.println("Unknown command");
+            if (command.equals("fibo"))
+            {
+                System.out.println("Entrez le terme souhaité : ");
+                int n = scanner.nextInt();
+                System.out.println(fibo(n));
+            }
+            else
+                System.out.println("Unknown command");
             command = scanner.next();
         }
+    }
+
+    public static int fibo(int n)
+    {
+        if (n == 0)
+            return 0;
+        else if (n == 1)
+            return 1;
+        else
+            return fibo(n - 1) + fibo(n - 2);
     }
 }
