@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -20,8 +21,9 @@ public class Predict implements Command {
         try {
             chosen = sc.nextLine();
 
+
             String a = Files.readString(Paths.get(chosen));
-            String[] words = a.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
+            String[] words = a.replaceAll("[^a-zA-Z0-9 ]", "").toLowerCase().split(" ");
             // Frick streams I don't like you
             Map<String, Map<String, Integer>> m = new HashMap<>();
             for (int i = 0; i < words.length - 1; i++) {
@@ -42,6 +44,7 @@ public class Predict implements Command {
             }
             System.out.println("Enter a word : ");
             chosen = sc.nextLine();
+            chosen = chosen.toLowerCase();
             if (!m.containsKey(chosen)) {
                 System.out.println("This word is not in the text !");
                 return false;
@@ -52,7 +55,6 @@ public class Predict implements Command {
             while(m.containsKey(next) && length++ < 20) {
                 Map<String, Integer> val = m.get(next);
                 Integer value = 0;
-                m.remove(next); // Avoid infinite loops
                 builder.append(" " + next);
                 for(Entry<String, Integer> e : val.entrySet()) {
                     if(e.getValue() > value) {
@@ -66,7 +68,7 @@ public class Predict implements Command {
         } catch (IOException e) {
             System.out.println("Unreadable file : " + e.getClass() + " " + e.getMessage());
         }
-        return false;
+        return true;
     }
 
 }

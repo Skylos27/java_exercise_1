@@ -10,8 +10,9 @@ public class Fibo implements Command{
     public boolean run(Scanner scanner) {
         System.out.println("Entrez le terme souhaité : ");
         int n = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Fibo(" + n + ") = " + fibo(n));
-        return false;
+        return true;
     }
     public static int fibo(int n)
     {

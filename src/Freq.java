@@ -47,6 +47,6 @@ public class Freq implements Command{
         } catch (IOException e) {
             System.out.println("Unreadable file: " + e);
         }
-        return false;
+        return true;
     }
 }

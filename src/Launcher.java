@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Launcher {
     public static void main(String[] args) {
-        System.out.println("You have 4 commands available, fibo, freq, predict and quit. Have fun with those !");
+        System.out.println("Welcome to the 42java prompt. Do not type help, I would not help you!!!");
 
         List<Command> commands = List.of(
                 new Quit(),
@@ -13,24 +13,25 @@ public class Launcher {
         );
 
         Scanner scanner = new Scanner(System.in);
-        boolean quit = true;
-        do {
+        while(true) {
             String instruction = scanner.nextLine();
 
             boolean found = false;
-            for (var i : commands) {
+            for (Command i : commands) {
                 if (i.name().equals(instruction)) {
-                    if (i.run(scanner))
+                    if (!i.run(scanner)) {
+                        scanner.close();
                         return;
-                    quit = false;
+                    }
                     found = true;
+                    break;
                 }
             }
 
             if (!found)
                 System.out.println("Unknown command");
 
-        } while (quit);
+        }
     }
 
 }
